@@ -41,5 +41,5 @@ try {
     exit();
 }
 
-header('Location:input.php');
+header('Location:main.php');
 exit();

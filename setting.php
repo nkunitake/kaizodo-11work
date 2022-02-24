@@ -11,7 +11,7 @@ $id = $_GET['id'];
 // DB接続
 
 $pdo = connect_to_db();
-$sql = 'SELECT * FROM contents_box WHERE id=:id';
+$sql = 'SELECT * FROM users_table WHERE id=:id';
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 try {
@@ -23,9 +23,6 @@ try {
 
 $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
-
-// SQL実行
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +43,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-    <form action="update.php" method="POST">
+    <form action="setting_change.php" method="POST">
         <!-- ヘッダー -->
         <div class="main-wrapper">
             <div class="header-wrapper">
@@ -75,32 +72,33 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
                 </ul>
             </nav>
             <!-- 投稿部分 -->
-            <dl class="form-inner">
-                <dt class="inner-title">投稿:</dt>
-                <dd class="inner-detail"><textarea name="content" class="textarea-parts" wrap="hard"><?= $record['content'] ?></textarea>
+            <dl class="form-inner2">
+                <dt class="inner-title2">ユーザー名:</dt>
+                <dd class="inner-detail2">
+                    <p name="username" class="form-parts"><?= $record['username'] ?></p>
                 </dd>
-                <dt class="inner-title">コメント:</dt>
-                <dd class="inner-detail"><input type="text" name="comment" class="form-parts" value="<?= $record['comment'] ?>"></dd>
-                <dt class=" inner-title">タグ:</dt>
-                <dd class="inner-detail"><select name="tag" class="select-parts">
-                        <option value="">選択してください</option>
-                        <option value="central">セリーグ</option>
-                        <option value="pacific">パリーグ</option>
-                    </select>
-                </dd>
+                <dt class="inner-title2">メールアドレス:</dt>
+                <dd class="inner-detail2"><input type="text" name="mail" class="form-parts" value="<?= $record['mail'] ?>"></dd>
+                <dt class="inner-title2">パスワード:</dt>
+                <dd class="inner-detail2"><input type="password" name="password" class="form-parts" value="<?= $record['password'] ?>"></dd>
                 <div>
                     <input type="hidden" name="id" value="<?= $record['id'] ?>">
                 </div>
                 <div class="btn">
-                    <button class="btn-post">編集する</button>
+                    <button class="intro-btn-post">更新する</button>
                 </div>
             </dl>
-            <!-- フッター -->
-            <footer>
-                <p>© KAIZO-DO All Rights Reserved.</p>
-            </footer>
         </div>
     </form>
+    <div class="btn-wrapper2">
+        <a href="logout.php">
+            <button class="btn-post">ログアウト</button>
+        </a>
+    </div>
+    <!-- フッター -->
+    <footer>
+        <p>© KAIZO-DO All Rights Reserved.</p>
+    </footer>
 
 </body>
 

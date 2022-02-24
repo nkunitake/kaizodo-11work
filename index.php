@@ -17,15 +17,19 @@
 
 <body>
     <div class="main-wrapper">
-        <div>
-            <a href="main.php">
-                <div class="title-wrapper">
-                    <div class="title-logo">
-                        <img src="img/npbKV2.png" alt="ヘッダーロゴ">
+        <div class="header-wrapper">
+            <div class="header-left">
+                <a href="index.php">
+                    <div class="title-wrapper">
+                        <div class="title-logo">
+                            <img src="img/npbKV2.png" alt="ヘッダーロゴ">
+                        </div>
+                        <h1 class="title-text">KAIZO-DO -プロ野球編-</h1>
                     </div>
-                    <h1 class="title-text">KAIZO-DO -プロ野球編-</h1>
-                </div>
-            </a>
+                </a>
+            </div>
+            <div class="header-right">
+            </div>
         </div>
         <div class="intro-wrapper">
             <div class="description-wrapper">
@@ -34,8 +38,12 @@
             <div class="index-image">
                 <img src="img/baseballkv.jpg" alt="メイン画像">
             </div>
-            <div class="btn"><a href="main.php">
-                    <button class="intro-btn-post">早速はじめる</button>
+            <div class="btn"><a href="register.php">
+                    <button class="intro-btn-post">新規会員登録</button>
+                </a>
+            </div>
+            <div class="btn"><a href="login.php">
+                    <button class="intro-btn-post">ログイン</button>
                 </a>
             </div>
         </div>

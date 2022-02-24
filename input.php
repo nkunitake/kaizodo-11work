@@ -1,3 +1,10 @@
+<?php
+session_start();
+include('functions.php');
+check_session_id();
+?>
+
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -19,15 +26,22 @@
     <form action="create.php" method="POST">
         <!-- ヘッダー -->
         <div class="main-wrapper">
-            <div>
-                <a href="main.php">
-                    <div class="title-wrapper">
-                        <div class="title-logo">
-                            <img src="img/npbKV2.png" alt="ヘッダーロゴ">
+            <div class="header-wrapper">
+                <div class="header-left">
+                    <a href="main.php">
+                        <div class="title-wrapper">
+                            <div class="title-logo">
+                                <img src="img/npbKV2.png" alt="ヘッダーロゴ">
+                            </div>
+                            <h1 class="title-text">KAIZO-DO -プロ野球編-</h1>
                         </div>
-                        <h1 class="title-text">KAIZO-DO -プロ野球編-</h1>
-                    </div>
-                </a>
+                    </a>
+                </div>
+                <div class="header-right">
+                    <a href='setting.php?id=<?= $_SESSION["user_id"] ?>'>
+                        <img src="img/icon.png" alt="ユーザーアイコン">
+                    </a>
+                </div>
             </div>
             <nav class="navigation">
                 <ul class="navi-list">
@@ -39,8 +53,6 @@
             </nav>
             <!-- 投稿部分 -->
             <dl class="form-inner">
-                <dt class="inner-title">投稿者名:</dt>
-                <dd class="inner-detail"><input type="text" name="username" class="form-parts"></dd>
                 <dt class="inner-title">投稿:</dt>
                 <dd class="inner-detail"><textarea name="content" class="textarea-parts" wrap="hard"></textarea>
                 </dd>
@@ -53,6 +65,7 @@
                         <option value="pacific">パリーグ</option>
                     </select>
                 </dd>
+                <input type="hidden" name="username" value="<?= $_SESSION['username'] ?>">
                 <div class="btn">
                     <button class="btn-post">投稿する</button>
                 </div>

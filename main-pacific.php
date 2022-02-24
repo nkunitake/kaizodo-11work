@@ -1,6 +1,7 @@
 <?php
-
+session_start();
 include('functions.php');
+check_session_id();
 
 // SQL作成&実行
 $pdo = connect_to_db();
@@ -28,13 +29,13 @@ foreach ($result as $record) {
 
     $output .= "
     <div class='contents-wrapper'>
+    <a href='user.php?user={$record["username"]}' class='username-text'>投稿者名：{$record["username"]}</a>
     <a href='post.php?id={$record["id"]}'>
-    <p class='username-text'>投稿者名：{$record["username"]}</p>
     <div class='content-area'><p>{$contentbr}</p></div>
     <p class='comment-text'>コメント：{$record["comment"]}</p>
+    </a>
     <a href='main-{$record["tag"]}.php' class='tag-text'>タグ：{$tag}</a>
     <p class='date-text'>投稿日：{$record["created_at"]}</p>
-    </a>
     </div>
     ";
 }
@@ -62,15 +63,22 @@ foreach ($result as $record) {
 <body>
     <!-- ヘッダー -->
     <div class="main-wrapper">
-        <div>
-            <a href="main.php">
-                <div class="title-wrapper">
-                    <div class="title-logo">
-                        <img src="img/npbKV2.png" alt="ヘッダーロゴ">
+        <div class="header-wrapper">
+            <div class="header-left">
+                <a href="main.php">
+                    <div class="title-wrapper">
+                        <div class="title-logo">
+                            <img src="img/npbKV2.png" alt="ヘッダーロゴ">
+                        </div>
+                        <h1 class="title-text">KAIZO-DO -プロ野球編-</h1>
                     </div>
-                    <h1 class="title-text">KAIZO-DO -プロ野球編-</h1>
-                </div>
-            </a>
+                </a>
+            </div>
+            <div class="header-right">
+                <a href='setting.php?id=<?= $_SESSION["user_id"] ?>'>
+                    <img src="img/icon.png" alt="ユーザーアイコン">
+                </a>
+            </div>
         </div>
         <nav class="navigation">
             <ul class="navi-list">

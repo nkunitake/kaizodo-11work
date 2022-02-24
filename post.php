@@ -1,6 +1,7 @@
 <?php
-
+session_start();
 include('functions.php');
+check_session_id();
 
 $id = $_GET['id'];
 
@@ -22,34 +23,34 @@ try {
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $output = "";
 $delete = "";
-foreach ($result as $record) {
-    $contentbr = nl2br($record["content"]);
-    if ($record["tag"] === "central") {
-        $tag = "セリーグ";
-    } else {
-        $tag = "パリーグ";
-    };
+// foreach ($result as $record) {
+//     $contentbr = nl2br($record["content"]);
+//     if ($record["tag"] === "central") {
+//         $tag = "セリーグ";
+//     } else {
+//         $tag = "パリーグ";
+//     };
 
-    $output .= "
-    <div class='contents-wrapper'>
-    <a href='post.php?id={$record["id"]}'>
-    <p class='username-text'>投稿者名：{$record["username"]}</p>
-    <div class='content-area'><p>{$contentbr}</p></div>
-    <p class='comment-text'>コメント：{$record["comment"]}</p>
-    <a href='main-{$record["tag"]}.php' class='tag-text'>タグ：{$tag}</a>
-    <p class='date-text'>投稿日：{$record["created_at"]}</p>
-    <div class='edit-delete'>
-    <div class='edit-text'><a href='edit.php?id={$record["id"]}'>編集する</a></div>
-    <div class='modal-open'>削除する</class>
-    </div>
-    </a>
-    </div>
-    ";
+//     $output .= "
+//     <div class='contents-wrapper'>
+//     <a href='post.php?id={$record["id"]}'>
+//     <p class='username-text'>投稿者名：{$record["username"]}</p>
+//     <div class='content-area'><p>{$contentbr}</p></div>
+//     <p class='comment-text'>コメント：{$record["comment"]}</p>
+//     <a href='main-{$record["tag"]}.php' class='tag-text'>タグ：{$tag}</a>
+//     <p class='date-text'>投稿日：{$record["created_at"]}</p>
+//     <div class='edit-delete'>
+//     <div class='edit-text'><a href='edit.php?id={$record["id"]}'>編集する</a></div>
+//     <div class='modal-open'>削除する</class>
+//     </div>
+//     </a>
+//     </div>
+//     ";
 
-    $delete .= "
-    <a href='delete.php?id={$record["id"]}'><span>削除する<span></a>
-    ";
-}
+//     $delete .= "
+//     <a href='delete.php?id={$record["id"]}'><span>削除する<span></a>
+//     ";
+// }
 
 
 ?>
@@ -75,15 +76,22 @@ foreach ($result as $record) {
 <body>
     <!-- ヘッダー -->
     <div class="main-wrapper">
-        <div>
-            <a href="main.php">
-                <div class="title-wrapper">
-                    <div class="title-logo">
-                        <img src="img/npbKV2.png" alt="ヘッダーロゴ">
+        <div class="header-wrapper">
+            <div class="header-left">
+                <a href="main.php">
+                    <div class="title-wrapper">
+                        <div class="title-logo">
+                            <img src="img/npbKV2.png" alt="ヘッダーロゴ">
+                        </div>
+                        <h1 class="title-text">KAIZO-DO -プロ野球編-</h1>
                     </div>
-                    <h1 class="title-text">KAIZO-DO -プロ野球編-</h1>
-                </div>
-            </a>
+                </a>
+            </div>
+            <div class="header-right">
+                <a href='setting.php?id=<?= $_SESSION["user_id"] ?>'>
+                    <img src="img/icon.png" alt="ユーザーアイコン">
+                </a>
+            </div>
         </div>
         <nav class="navigation">
             <ul class="navi-list">
@@ -95,14 +103,38 @@ foreach ($result as $record) {
         </nav>
         <!-- メイン -->
         <div class="contents-area">
+            <!-- 前回の投稿形式 -->
+            <!-- <?= $output ?> -->
             <!-- ここに投稿内容が入る -->
-            <?= $output ?>
+            <?php foreach ($result as $record) : ?>
+                <div class='contents-wrapper'>
+                    <p class='username-text'>投稿者名：<?= $record["username"] ?></p>
+                    <div class='content-area'>
+                        <p><?= nl2br($record["content"]) ?></p>
+                    </div>
+                    <p class='comment-text'>コメント：<?= $record["comment"] ?></p>
+                    <?php if ($record["tag"] === "central") : ?>
+                        <a href='main-central.php' class='tag-text'>タグ：セリーグ</a>
+                    <?php else : ?>
+                        <a href='main-pacific.php' class='tag-text'>タグ：パリーグ</a>
+                    <?php endif ?>
+                    <p class='date-text'>投稿日：<?= $record["created_at"] ?></p>
+                    <?php if ($record["username"] === $_SESSION['username']) : ?>
+                        <div class='edit-delete'>
+                            <div class='edit-text'><a href='edit.php?id=<?= $record["id"] ?>'>編集する</a></div>
+                            <div class='modal-open'>削除する</class>
+                            </div>
+                        </div>
+                    <?php endif ?>
+                </div>
+            <?php endforeach ?>
+
         </div>
         <!-- 削除モーダル -->
         <div class="delete-select-form" id="delete-modal">
             <div class="delete-select-modal">
                 <p>本当に削除しますか？</p>
-                <button><?= $delete ?></button>
+                <button><a href='delete.php?id=<?= $record["id"] ?>'><span>削除する<span></a></button>
                 <button class="modal-close">いいえ</button>
             </div>
         </div>

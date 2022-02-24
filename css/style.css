@@ -14,16 +14,31 @@ font-family: 'Open Sans', sans-serif;
     margin: auto;
 }
 
+.header-wrapper{
+  display: flex;
+  background-color: #41bbbf;
+  height: 60px;
+}
+
+.header-left{
+  width: 80%;
+}
+
+.header-right{
+  width: 20%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
 .title-wrapper{
-    background-color: #41bbbf;
-    height: 60px;
     color: white;
     text-align: center;
     font-size: 24px;
     font-weight: bold;
     display: flex;
     justify-content: center;
-    padding: 5px 40px;
+    padding: 5px 20px 5px 50px;
 }
 
 .title-logo{
@@ -91,7 +106,7 @@ font-family: 'Open Sans', sans-serif;
 }
 
 .index-image{
-    margin: 0 20px;
+    margin: 0 20px 20px 20px;
 }
 
 .index-image img{
@@ -138,6 +153,37 @@ font-family: 'Open Sans', sans-serif;
 .intro-btn-post:hover:before {
   border-top: 2px solid #FA8072;
   border-right: 2px solid #FA8072;
+}
+
+/* userstable.php */
+.form-inner2{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 380px;
+    margin: 20px auto;
+}
+
+.inner-title2{
+    width: 150px;
+    text-align: right;
+    margin: 10px 10px 10px 0;
+}
+
+.inner-detail2{
+    width: 210px;
+    text-align: left;
+    margin: 10px 0 10px 10px;
+}
+
+.btn-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.btn-wrapper2{
+    display: flex;
+    justify-content: center;
 }
 
 
@@ -248,7 +294,7 @@ font-family: 'Open Sans', sans-serif;
 }
 
 .contents-wrapper{
-    padding: 10px;
+    padding: 20px 10px 10px 10px;
     margin: 0px 10px 20px;
     color: #5d627b;
     background: white;
@@ -267,12 +313,13 @@ font-family: 'Open Sans', sans-serif;
 
 .username-text{
     text-align: left;
-    margin: 10px 0 10px 20px;
+    margin: 0 0 0 20px;
                 font-size: 18px;
+                    text-decoration:underline;
 }
 
 .content-area{
-    margin: 5px 10px;
+    margin: 15px 10px;
             padding: 20px;
             font-size: 20px;
     font-weight: bold;
