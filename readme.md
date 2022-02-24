@@ -23,3 +23,4 @@ KAIZO-DO - プロ野球編 - (会員登録・ログイン・ユーザー識別�
 - 私のM1チップMacPCではXAMPPのapacheがうまく起動しないため、MAMPで実装をしています。DB接続の書き方をMAMP用に少し修正しているのでご留意ください。
 
 ## URL
+https://nkunitake.github.io/kaizodo-09/
