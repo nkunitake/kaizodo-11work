@@ -5,6 +5,7 @@
 // exit();
 
 if (
+    !isset($_POST["user_id"]) || $_POST["user_id"] == "" ||
     !isset($_POST["username"]) || $_POST["username"] == "" ||
     !isset($_POST["content"]) || $_POST["content"] == "" ||
     !isset($_POST["comment"]) || $_POST["comment"] == "" ||
@@ -13,6 +14,7 @@ if (
     exit("ParamError");
 }
 
+$user_id = $_POST["user_id"];
 $username = $_POST["username"];
 $content = $_POST["content"];
 $comment = $_POST["comment"];
@@ -23,11 +25,12 @@ include('functions.php');
 $pdo = connect_to_db();
 
 // SQL作成&実行
-$sql = 'INSERT INTO contents_box (id, username, content, comment, tag, created_at) VALUES (NULL, :username, :content, :comment, :tag, now())';
+$sql = 'INSERT INTO contents_box (id, user_id, username, content, comment, tag, created_at) VALUES (NULL, :user_id, :username, :content, :comment, :tag, now())';
 
 $stmt = $pdo->prepare($sql);
 
 // バインド変数を設定
+$stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
 $stmt->bindValue(':username', $username, PDO::PARAM_STR);
 $stmt->bindValue(':content', $content, PDO::PARAM_STR);
 $stmt->bindValue(':comment', $comment, PDO::PARAM_STR);

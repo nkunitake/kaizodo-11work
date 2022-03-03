@@ -413,6 +413,11 @@ font-size: 20px;
     font-weight: bold;
 }
 
+
+.likebtn{
+  margin: 0 0 0 20px;
+}
+
 footer p {
   text-align: center;
   font-size: 14px;

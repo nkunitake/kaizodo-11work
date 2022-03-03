@@ -4,12 +4,13 @@ include('functions.php');
 check_session_id();
 // var_dump($_GET);
 // exit();
+$user_id = $_SESSION['user_id'];
 
 $username = $_GET['user'];
 
 // SQL作成&実行
 $pdo = connect_to_db();
-$sql = 'SELECT * FROM contents_box WHERE username=:username';
+$sql = 'SELECT * FROM contents_box LEFT OUTER JOIN (SELECT post_id, COUNT(id) AS like_count FROM like_table GROUP BY post_id) AS result_table ON contents_box.id = result_table.post_id WHERE username=:username';
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':username', $username, PDO::PARAM_STR);
 
@@ -88,7 +89,11 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <a href='main-pacific.php' class='tag-text'>タグ：パリーグ</a>
                     <?php endif ?>
                     <p class='date-text'>投稿日：<?= $record["created_at"] ?></p>
-                    <?php if ($record["username"] === $_SESSION['username']) : ?>
+                    <div class="likebtn">
+                        <a href='like_create.php?user_id=<?= $user_id ?>&post_id=<?= $record["id"] ?>'><img src="img/heart.png" alt="like">
+                        </a><span><?= $record["like_count"] ?></span>
+                    </div>
+                    <?php if ($record["user_id"] === $_SESSION['user_id']) : ?>
                         <div class='edit-delete'>
                             <div class='edit-text'><a href='edit.php?id=<?= $record["id"] ?>'>編集する</a></div>
                             <div class='modal-open'>削除する</class>

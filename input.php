@@ -66,6 +66,7 @@ check_session_id();
                     </select>
                 </dd>
                 <input type="hidden" name="username" value="<?= $_SESSION['username'] ?>">
+                <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
                 <div class="btn">
                     <button class="btn-post">投稿する</button>
                 </div>

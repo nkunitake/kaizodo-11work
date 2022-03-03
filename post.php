@@ -2,12 +2,13 @@
 session_start();
 include('functions.php');
 check_session_id();
+$user_id = $_SESSION['user_id'];
 
 $id = $_GET['id'];
 
 // SQL作成&実行
 $pdo = connect_to_db();
-$sql = 'SELECT * FROM contents_box WHERE id=:id';
+$sql = 'SELECT * FROM contents_box LEFT OUTER JOIN (SELECT post_id, COUNT(id) AS like_count FROM like_table GROUP BY post_id) AS result_table ON contents_box.id = result_table.post_id WHERE id=:id';
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 
@@ -19,38 +20,7 @@ try {
 }
 
 // SQL実行の処理
-
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$output = "";
-$delete = "";
-// foreach ($result as $record) {
-//     $contentbr = nl2br($record["content"]);
-//     if ($record["tag"] === "central") {
-//         $tag = "セリーグ";
-//     } else {
-//         $tag = "パリーグ";
-//     };
-
-//     $output .= "
-//     <div class='contents-wrapper'>
-//     <a href='post.php?id={$record["id"]}'>
-//     <p class='username-text'>投稿者名：{$record["username"]}</p>
-//     <div class='content-area'><p>{$contentbr}</p></div>
-//     <p class='comment-text'>コメント：{$record["comment"]}</p>
-//     <a href='main-{$record["tag"]}.php' class='tag-text'>タグ：{$tag}</a>
-//     <p class='date-text'>投稿日：{$record["created_at"]}</p>
-//     <div class='edit-delete'>
-//     <div class='edit-text'><a href='edit.php?id={$record["id"]}'>編集する</a></div>
-//     <div class='modal-open'>削除する</class>
-//     </div>
-//     </a>
-//     </div>
-//     ";
-
-//     $delete .= "
-//     <a href='delete.php?id={$record["id"]}'><span>削除する<span></a>
-//     ";
-// }
 
 
 ?>
@@ -103,8 +73,6 @@ $delete = "";
         </nav>
         <!-- メイン -->
         <div class="contents-area">
-            <!-- 前回の投稿形式 -->
-            <!-- <?= $output ?> -->
             <!-- ここに投稿内容が入る -->
             <?php foreach ($result as $record) : ?>
                 <div class='contents-wrapper'>
@@ -119,7 +87,11 @@ $delete = "";
                         <a href='main-pacific.php' class='tag-text'>タグ：パリーグ</a>
                     <?php endif ?>
                     <p class='date-text'>投稿日：<?= $record["created_at"] ?></p>
-                    <?php if ($record["username"] === $_SESSION['username']) : ?>
+                    <div class="likebtn">
+                        <a href='like_create.php?user_id=<?= $user_id ?>&post_id=<?= $record["id"] ?>'><img src="img/heart.png" alt="like">
+                        </a><span><?= $record["like_count"] ?></span>
+                    </div>
+                    <?php if ($record["user_id"] === $_SESSION['user_id']) : ?>
                         <div class='edit-delete'>
                             <div class='edit-text'><a href='edit.php?id=<?= $record["id"] ?>'>編集する</a></div>
                             <div class='modal-open'>削除する</class>
@@ -128,7 +100,6 @@ $delete = "";
                     <?php endif ?>
                 </div>
             <?php endforeach ?>
-
         </div>
         <!-- 削除モーダル -->
         <div class="delete-select-form" id="delete-modal">
