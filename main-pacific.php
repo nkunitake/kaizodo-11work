@@ -96,7 +96,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <a href='user.php?user=<?= $record["username"] ?>' class='username-text'>投稿者名：<?= $record["username"] ?></a>
                     <a href='post.php?id=<?= $record["id"] ?>'>
                         <div class='content-area'>
-                            <p><?= nl2br($record["content"]) ?></p>
+                            <?= nl2br($record["content"]) ?></br>
+                            <img src='<?= $record["image"] ?>'></p>
                         </div>
                         <p class='comment-text'>コメント：<?= $record["comment"] ?></p>
                     </a>

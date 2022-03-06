@@ -10,7 +10,7 @@ $username = $_GET['user'];
 
 // SQL作成&実行
 $pdo = connect_to_db();
-$sql = 'SELECT * FROM contents_box LEFT OUTER JOIN (SELECT post_id, COUNT(id) AS like_count FROM like_table GROUP BY post_id) AS result_table ON contents_box.id = result_table.post_id WHERE username=:username';
+$sql = 'SELECT * FROM contents_box LEFT OUTER JOIN (SELECT post_id, COUNT(id) AS like_count FROM like_table GROUP BY post_id) AS result_table ON contents_box.id = result_table.post_id WHERE username=:username  ORDER BY created_at DESC';
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':username', $username, PDO::PARAM_STR);
 
@@ -80,7 +80,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class='contents-wrapper'>
                     <p class='username-text'>投稿者名：<?= $record["username"] ?></p>
                     <div class='content-area'>
-                        <p><?= nl2br($record["content"]) ?></p>
+                        <?= nl2br($record["content"]) ?></br>
+                        <img src='<?= $record["image"] ?>'></p>
                     </div>
                     <p class='comment-text'>コメント：<?= $record["comment"] ?></p>
                     <?php if ($record["tag"] === "central") : ?>

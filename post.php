@@ -78,7 +78,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class='contents-wrapper'>
                     <p class='username-text'>投稿者名：<?= $record["username"] ?></p>
                     <div class='content-area'>
-                        <p><?= nl2br($record["content"]) ?></p>
+                        <?= nl2br($record["content"]) ?></br>
+                        <img src='<?= $record["image"] ?>'></p>
                     </div>
                     <p class='comment-text'>コメント：<?= $record["comment"] ?></p>
                     <?php if ($record["tag"] === "central") : ?>

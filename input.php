@@ -23,7 +23,7 @@ check_session_id();
 </head>
 
 <body>
-    <form action="create.php" method="POST">
+    <form action="create_file.php" method="POST" enctype="multipart/form-data">
         <!-- ヘッダー -->
         <div class="main-wrapper">
             <div class="header-wrapper">
@@ -53,8 +53,11 @@ check_session_id();
             </nav>
             <!-- 投稿部分 -->
             <dl class="form-inner">
-                <dt class="inner-title">投稿:</dt>
+                <dt class="inner-title">投稿文:</dt>
                 <dd class="inner-detail"><textarea name="content" class="textarea-parts" wrap="hard"></textarea>
+                </dd>
+                <dt class="inner-title">写真</dt>
+                <dd class="inner-detail"><input type="file" name="upfile" accept="image/*" capture="camera">
                 </dd>
                 <dt class="inner-title">コメント:</dt>
                 <dd class="inner-detail"><input type="text" name="comment" class="form-parts"></dd>
