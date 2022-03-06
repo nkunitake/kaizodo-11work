@@ -22,3 +22,4 @@ KAIZO-DO - プロ野球編 - (写真投稿機能実装)
 - 私のM1チップMacPCではXAMPPのapacheがうまく起動しないため、MAMPで実装をしています。DB接続の書き方をMAMP用に少し修正しているのでご留意ください。
 
 ## URL
+https://nkunitake.github.io/kaizodo-11work/
